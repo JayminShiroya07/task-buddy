@@ -4,6 +4,9 @@ import Home from './components/Home'
 import MainNavigation from './components/MainNavigation'
 import NotFound from './components/NotFound'
 import Tasks from './components/Tasks'
+import EditTask from './components/EditTask'
+import TaskNavigation from './components/TaskNavigation'
+import AddTask from './components/AddTask'
 
 function App() {
   const router = createBrowserRouter([
@@ -18,8 +21,23 @@ function App() {
         },
         {
           path:'Tasks',
-          element: <Tasks/>
-        }
+          element: <TaskNavigation/>,
+          children: [
+            {
+              index:true,
+              element: <Tasks/>
+            },
+            {
+              path: 'AddTask',
+              element: <AddTask/>
+            },
+            {
+              path:':taskId',
+              element:<EditTask/>
+            }
+          ]
+        },
+        
       ]
     }
   ])

@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import logo from '../assets/taskbuddy-logo.png';
-import { NavLink } from 'react-router-dom';
+import { Link, NavLink } from 'react-router-dom';
 
 export default function Header() {
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -8,25 +8,26 @@ export default function Header() {
     const unActive = "hover:text-gray-400 text-2xl py-1 px-6";
 
     return (<>
-        <header className="bg-cyan-800 text-white hidden md:flex justify-between items-center px-14 w-full">
-            <div className="flex items-center">
+        <header className="bg-cyan-800 text-white hidden md:flex justify-between items-center px-14 w-full fixed top-0 z-50">
+            <Link to='' className="flex items-center">
                 <img src={logo} alt="Logo of the site, a simple geometric shape" className="h-15 w-15 mr-2" />
                 <span className="text-xl font-bold">Task Buddy</span>
-            </div>
+            </Link>
             <nav className="flex items-center space-x-4">
                 {/* <a href='#' className=' '>Demo</a> */}
-                <NavLink to='' className={({isActive}) => isActive ? linkActive : unActive}>Home</NavLink>
-                <NavLink to="tasks" className={({isActive}) => isActive ? linkActive : unActive}>Tasks</NavLink>
+                <NavLink to='' className={({ isActive }) => isActive ? linkActive : unActive}>Home</NavLink>
+                <NavLink to="Tasks" className={({ isActive }) => isActive ? linkActive : unActive}>Tasks</NavLink>
+
                 {/* <   input type="text" placeholder="Search..." className="px-2 py-1 rounded border-white border-1" /> */}
             </nav>
         </header>
 
         <div className='md:hidden'>
             <header className="bg-cyan-800 text-white p-4 flex justify-between items-center">
-                <div className="flex items-center">
+                <Link to='' className="flex items-center cursor-pointer">
                     <img src={logo} alt="Logo of the site, a simple geometric shape" className="h-11 w-11 mr-2" />
                     <span className="text-xl font-bold">Task&nbsp;Buddy</span>
-                </div>
+                </Link>
                 <button onClick={() => setSidebarOpen(!sidebarOpen)} className="text-white focus:outline-none md:hidden">
                     <i className="fas fa-bars"></i>
                 </button>
@@ -38,8 +39,8 @@ export default function Header() {
                         <i className="fas fa-times"></i>
                     </button>
                     <nav className="flex flex-col space-y-4">
-                        <NavLink to='' className={({isActive}) => isActive ? linkActive : unActive} onClick={() => setSidebarOpen(false)}>Home</NavLink>
-                        <NavLink to="tasks" className={({isActive}) => isActive ? linkActive : unActive} onClick={() => setSidebarOpen(false)}>Tasks</NavLink>
+                        <NavLink to='' className={({ isActive }) => isActive ? linkActive : unActive} onClick={() => setSidebarOpen(false)}>Home</NavLink>
+                        <NavLink to="Tasks" className={({ isActive }) => isActive ? linkActive : unActive} onClick={() => setSidebarOpen(false)}>Tasks</NavLink>
                         {/* <input type="text" placeholder="Search..." className="px-2 py-1 rounded" /> */}
                     </nav>
                 </div>
