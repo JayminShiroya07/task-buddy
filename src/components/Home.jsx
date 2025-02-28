@@ -1,10 +1,12 @@
+import { Link } from "react-router-dom";
+
 export default function Home() {
     return (
         <main class="container mx-auto p-3">
             <section class="bg-cyan-700 p-8 rounded-lg shadow-lg mb-6 text-white flex flex-col md:flex-row items-center">
-                <div class="md:w-1/2">
-                    <h2 class="text-4xl font-bold mb-4">
-                        The Importance of a Todo List
+                <div class="md:w-1/2 typewriter">
+                    <h2 class="text-4xl font-bold mb-4 ">
+                        The Importance of a Todo List....
                     </h2>
                     <p class="mb-4">
                         A todo list is a simple yet powerful tool that helps you organize your tasks and manage your time effectively. Here are some key benefits of using a todo list:
@@ -26,6 +28,9 @@ export default function Home() {
                     <p>
                         By incorporating a todo list into your daily routine, you can achieve your goals more efficiently and maintain a better work-life balance.
                     </p>
+                    <div className="text-center mt-20">
+                        <Link to="/Tasks/AddTask" className="bg-cyan-800 animate-pulse  px-4 py-2 rounded-md box-button hover:bg-cyan-500 active:bg-cyan-400">Create Your First Task</Link>
+                    </div>
                 </div>
                 <div class="md:w-1/2 flex justify-center">
                     <img alt="Illustration of a person using a todo list to organize tasks and improve productivity" class="w-full md:w-3/4 rounded-lg mb-4" height="300" src="https://storage.googleapis.com/a1aa/image/LjMgk2yPzXV436bsJPeJzyRPmMZvjsKXFZRMQmkuVYk.jpg" width="300" />
