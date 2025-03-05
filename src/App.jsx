@@ -7,42 +7,51 @@ import Tasks from './components/Tasks'
 import EditTask from './components/EditTask'
 import TaskNavigation from './components/TaskNavigation'
 import AddTask from './components/AddTask'
+import store from './store/index'
+import { Provider } from 'react-redux'
+import {action as addTaskAction} from './components/TodoForm'
 
 function App() {
   const router = createBrowserRouter([
     {
       path: '/',
-      element: <MainNavigation/>,
-      errorElement: <NotFound/>,
-      children:[
+      element: <MainNavigation />,
+      errorElement: <NotFound />,
+      children: [
         {
           index: true,
-          element: <Home/>
+          element: <Home />
         },
         {
-          path:'Tasks',
-          element: <TaskNavigation/>,
+          path: 'Tasks',
+          element: <TaskNavigation />,
           children: [
             {
-              index:true,
-              element: <Tasks/>
+              index: true,
+              element: <Tasks />
             },
             {
               path: 'AddTask',
-              element: <AddTask/>
+              element: <AddTask />,
+              action : addTaskAction
             },
             {
-              path:':taskId',
-              element:<EditTask/>
+              path: ':taskId',
+              element: <EditTask />
             }
           ]
         },
-        
+
       ]
     }
   ])
 
-  return ( <RouterProvider router={router}></RouterProvider> )
+
+  return (
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
+  )
 }
 
 export default App

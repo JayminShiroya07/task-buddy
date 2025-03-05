@@ -12,8 +12,8 @@ export default function TaskItems({ task }) {
         <>
             <div className="border rounded-lg mb-4 shadow-md overflow-hidden hover:scale-[102%] hover:shadow-xl flex flex-col justify-between">
                 <div className="flex md:items-center mb-2 shadow shadow-black bg-cyan-800">
-                    <div className="w-1/5 font-bold text-center text-white text-3xl border-r-2">{task.id}</div>
-                    <div className="w-4/5 font-bold text-white text-2xl px-3 text-center">{task.title}</div>
+                    {/* <div className="w-1/5 font-bold text-center text-white text-3xl border-r-2">{task.id}</div> */}
+                    <div className="font-bold text-white text-2xl px-3 text-center">{task.title}</div>
                 </div>
                 <div className="mb-4 p-2 min-h-25 text-black">{task.description}</div>
                 <div className="bg-cyan-800 p-[6px] flex justify-between">
