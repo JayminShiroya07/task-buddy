@@ -8,10 +8,14 @@ import EditTask from './components/EditTask'
 import TaskNavigation from './components/TaskNavigation'
 import AddTask from './components/AddTask'
 import store from './store/index'
-import { Provider } from 'react-redux'
-import {action as addTaskAction} from './components/TodoForm'
+import { Provider, useSelector } from 'react-redux'
+// import {action as addTaskAction} from './components/TodoForm'
+import ErrorPage from './components/ErrorPage'
 
 function App() {
+
+  const ui = useSelector(state => state.ui);
+  
   const router = createBrowserRouter([
     {
       path: '/',
@@ -29,15 +33,6 @@ function App() {
             {
               index: true,
               element: <Tasks />
-            },
-            {
-              path: 'AddTask',
-              element: <AddTask />,
-              action : addTaskAction
-            },
-            {
-              path: ':taskId',
-              element: <EditTask />
             }
           ]
         },
@@ -46,9 +41,12 @@ function App() {
     }
   ])
 
+  
+
 
   return (
     <Provider store={store}>
+      {ui.isError && <ErrorPage error="Error occured" />}
       <RouterProvider router={router} />
     </Provider>
   )

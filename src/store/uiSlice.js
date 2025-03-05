@@ -11,7 +11,6 @@ const uiSlice = createSlice({
     initialState : initialState,
     reducers : {
         changeLoading(state,action){
-            console.log(action)
             state.loading = action.payload.isLoading
         },
         setError(state, action){

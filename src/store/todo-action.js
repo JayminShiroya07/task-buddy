@@ -4,16 +4,19 @@ import { uiAction } from "./uiSlice";
 export const fetchTaskData = () => {
   return async (dispatch) => {
     const fetchData = async () => {
-      const response = await fetch("http://localhost:d3000/todos");
+      const response = await fetch("http://localhost:3000/todos");
 
       if (!response.ok) {
-        dispatch(uiAction.setError({
-            isError : true,
-            error : {
-                status : 400,
-                message : "failed to load task"
-            }
-        }));
+        console.log("error -> ");
+        dispatch(
+          uiAction.setError({
+            isError: true,
+            error: {
+              status: 400,
+              message: "failed to load task",
+            },
+          })
+        );
       }
 
       const data = await response.json();
@@ -30,9 +33,10 @@ export const fetchTaskData = () => {
         })
       );
     } catch (error) {
-        console.log(error)
+      console.log("error => ", error);
       dispatch(
         uiAction.setError({
+          isError: true,
           error: error,
         })
       );
@@ -40,4 +44,50 @@ export const fetchTaskData = () => {
   };
 };
 
-// export const 
+export const sendTaskData = (task) => {
+  return async (dispatch) => {
+    dispatch(
+      uiAction.changeLoading({
+        isLoading: true,
+      })
+    );
+
+    const sendRequest = async () => {
+      const response = await fetch("http://localhost:3000/todos", {
+        method: "PUT",
+        body: JSON.stringify({
+          items: task.items,
+        }),
+      });
+
+      if (!response.ok) {
+        console.log("error -> ");
+        dispatch(
+          uiAction.setError({
+            isError: true,
+            error: {
+              status: 400,
+              message: "failed to load task",
+            },
+          })
+        );
+      }
+    };
+
+    try {
+      await sendRequest();
+      dispatch(
+        uiAction.changeLoading({
+          isLoading: false,
+        })
+      );
+    } catch (error) {
+      dispatch(
+        uiAction.setError({
+          isError: true,
+          error: error,
+        })
+      );
+    }
+  };
+};
