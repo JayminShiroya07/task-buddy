@@ -10,23 +10,29 @@ import ErrorPage from "./ErrorPage";
 export default function Tasks() {
 
     const dispatch = useDispatch();
-
-    useEffect(() => {
-        dispatch(uiAction.changeLoading({
-            isLoading: true
-        }));
-        dispatch(fetchTaskData());
-        dispatch(uiAction.changeLoading({
-            isLoading: false
-        }));
-
-    }, [dispatch]);
     const todoList = useSelector(state => state.todo.todos);
     const isLoading = useSelector(state => state.ui.loading);
     const isError = useSelector(state => state.ui.isError);
     const error = useSelector(state => state.ui.error);
 
+    useEffect(() => {
+        console.log("started")
+        dispatch(uiAction.changeLoading({
+            isLoading: true
+        }));
+
+        dispatch(fetchTaskData());
+
+        console.log(error)
+        dispatch(uiAction.changeLoading({
+            isLoading: false
+        }));
+
+    }, [dispatch]);
+    
+
     if(isError){
+        console.log("error => ",error)
         return <ErrorPage error={error.message}/>
     }
 

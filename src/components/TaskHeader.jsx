@@ -3,7 +3,7 @@ import { useRef } from "react";
 import { useDispatch } from "react-redux";
 import { todoActions } from "../store/todoSlice";
 
-export default function TaskHeader() {
+export default function TaskHeader({toogle}) {
 
     const searchValue = useRef();
     const dispatch = useDispatch();
@@ -14,6 +14,12 @@ export default function TaskHeader() {
             search : search
         }));
     }
+
+
+
+    function handleModal(){
+
+    }
     
     const linkActive = "px-4 bg-cyan-800 py-1 px-6 rounded font-semibold text-white shadow-xl";
     const unActive = "px-2 md:px-4 bg-cyan-100 py-1 px-6 rounded";
@@ -22,8 +28,8 @@ export default function TaskHeader() {
             <div className="flex gap-5">
                 <NavLink to='/Tasks' className={({ isActive }) => isActive ? linkActive : unActive} end>
                     <i className="fas fa-list-ul"></i> All Tasks</NavLink>
-                <NavLink to="AddTask" className={({ isActive }) => isActive ? linkActive : unActive}>
-                    <i className='fas fa-plus-circle'></i> Add Tasks</NavLink>
+                <button className={linkActive} onClick={toogle}>
+                    <i className='fas fa-plus-circle'></i> Add Tasks</button>
             </div>
             <select id="filter" name="filter" 
                 ref={searchValue} 
