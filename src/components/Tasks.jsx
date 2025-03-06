@@ -2,7 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import TaskItems from "./TaskItems";
 import { useEffect, useState } from "react";
 import { replace } from "react-router-dom";
-import { todoActions } from "../store/todoSlice";
+import todoSlice, { todoActions } from "../store/todoSlice";
 import { uiAction } from "../store/uiSlice";
 import { fetchTaskData } from "../store/todo-action";
 import ErrorPage from "./ErrorPage";
@@ -16,14 +16,11 @@ export default function Tasks() {
     const error = useSelector(state => state.ui.error);
 
     useEffect(() => {
-        console.log("started")
         dispatch(uiAction.changeLoading({
             isLoading: true
         }));
 
         dispatch(fetchTaskData());
-
-        console.log(error)
         dispatch(uiAction.changeLoading({
             isLoading: false
         }));
@@ -36,6 +33,23 @@ export default function Tasks() {
         return <ErrorPage error={error.message}/>
     }
 
+    if(!todoList){
+        return (
+            <>
+                <h1>Somthing were wrong..!</h1>
+            </>
+        )
+    }
+
+    if(todoList.length <= 0){
+        return (
+            <>
+                <h1>
+                    No Task Found..!
+                </h1>
+            </>
+        )
+    }
 
 
     return (
@@ -43,8 +57,8 @@ export default function Tasks() {
             <div className="md:px-10 justify-center flex w-full items-center">
                 <div className="grid grid-cols-1 md:grid-cols-3 w-full md:gap-5">
                     {isLoading ? <p>Loading....</p> : (
-                        todoList.map(task => (
-                            <TaskItems key={task.id} task={task} />
+                        todoList.map(todo => (
+                            <TaskItems key={todo.id} todo={todo} />
                         ))
                     )}
                 </div>

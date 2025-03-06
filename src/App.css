@@ -1,3 +1,5 @@
+
+
 .typewriter h2 {
   overflow: hidden;
   border-right: 0.15em solid rgb(14, 224, 224);
@@ -39,6 +41,10 @@
 }
 
 .modal {
+  position: absolute;
+  top: 25%;
+  left: 25%;
+  transform: translate(-50%, -50%);
   min-width: 30rem;
   padding: 0;
   z-index: 2;
@@ -46,6 +52,7 @@
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.26);
   animation: slide-down-fade-in 0.3s ease-out forwards;
+  /* animation: slide-up-fade-in 0.3s ease-out forwards; */
 }
 
 @keyframes slide-down-fade-in {
