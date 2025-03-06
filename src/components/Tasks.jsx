@@ -29,7 +29,6 @@ export default function Tasks() {
     
 
     if(isError){
-        console.log("error => ",error)
         return <ErrorPage error={error.message}/>
     }
 

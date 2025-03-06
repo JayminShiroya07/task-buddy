@@ -12,22 +12,49 @@ export default function TodoForm({ method, todo }) {
     const params = useParams();
 
     function signupAction(prevFormState, formData) {
-        let status = "Incomplete";
-        if(todo){
-            status = formData.get('status');
-        }
-        const newTask = {
-            id: params.taskId,
-            task : {
+        const title = formData.get('title').trim();
+        const description = formData.get('description').trim();
 
-                title: formData.get('title'),
-                description: formData.get('description'),
-                status
-            } 
+        let error = {
+            titleError: undefined,
+            descriptionError: undefined
+        }
+        if (title === '') {
+            error.titleError = "Plase Enter Title"
+        }
+        if (description === '') {
+            error.descriptionError = 'Plase enter description'
         }
 
-        dispatch(sendTaskData(method,newTask));
-        navigate('../')
+        if(title !== '' && title.length < 3){
+            error.titleError = "Title should be at least 4 characters long. "
+        }
+
+        if(description !== '' && description.length < 3){
+            error.descriptionError = "Title should be at least 4 characters long. "
+        }
+
+        if (error.titleError || error.descriptionError) {
+            return { error };
+        }
+        else {
+            let status = "Incomplete";
+            if (todo) {
+                status = formData.get('status');
+            }
+            const newTask = {
+                id: params.taskId,
+                task: {
+
+                    title,
+                    description,
+                    status
+                }
+            }
+            dispatch(sendTaskData(method, newTask));
+            navigate('../')
+        }
+
     }
 
     const [formState, formActoin] = useActionState(signupAction, { errors: null });
@@ -50,6 +77,11 @@ export default function TodoForm({ method, todo }) {
                                 className={inputCss}
                                 defaultValue={todo ? todo.title : ''}
                             />
+                            {formState.error && formState.error.titleError ?
+                                <p className="text-red-500 ">
+                                    {formState.error.titleError}
+                                </p> : ''}
+
                         </div>
                         <div className="flex flex-col items-start gap-1">
                             <label htmlFor="description" className="text-gray-900">Description</label>
@@ -61,6 +93,10 @@ export default function TodoForm({ method, todo }) {
                                 className={inputCss}
                                 defaultValue={todo ? todo.description : ''}
                             />
+                            {formState.error && formState.error.descriptionError ?
+                                <p className="text-red-500 ">
+                                    {formState.error.descriptionError}
+                                </p> : ''}
                         </div>
                         {todo && (
                             <>
@@ -84,8 +120,8 @@ export default function TodoForm({ method, todo }) {
                         <button
                             type="submit"
                             className="px-3 bg-cyan-600 rounded font-bold shadow-md active:bg-cyan-400 hover:bg-cyan-500">
-                                {method === "PATCH" ? "Update" : "Add"}
-                            </button>
+                            {method === "PATCH" ? "Update" : "Add"}
+                        </button>
                     </div>
                 </form>
             </div>
