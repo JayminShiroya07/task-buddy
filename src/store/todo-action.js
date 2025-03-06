@@ -1,3 +1,4 @@
+import { useParams } from "react-router-dom";
 import { todoActions } from "./todoSlice";
 import { uiAction } from "./uiSlice";
 
@@ -33,7 +34,6 @@ export const fetchTaskData = () => {
         })
       );
     } catch (error) {
-      console.log("error => ", error);
       dispatch(
         uiAction.setError({
           isError: true,
@@ -44,7 +44,14 @@ export const fetchTaskData = () => {
   };
 };
 
-export const sendTaskData = (task) => {
+export const sendTaskData = (method,todo) => {
+
+  let url = "http://localhost:3000/todos";
+
+  if(method === "PATCH"){
+    url += "/"+todo.id
+  }
+
   return async (dispatch) => {
     dispatch(
       uiAction.changeLoading({
@@ -53,10 +60,10 @@ export const sendTaskData = (task) => {
     );
 
     const sendRequest = async () => {
-      const response = await fetch("http://localhost:3000/todos", {
-        method: "PUT",
+      const response = await fetch(url, {
+        method: method,
         body: JSON.stringify({
-          items: task.items,
+          task : todo.task
         }),
       });
 
@@ -91,3 +98,126 @@ export const sendTaskData = (task) => {
     }
   };
 };
+
+export const fetchTaskDataById = (id) => {
+  return async (dispatch) => {
+    const fetchData = async () => {
+      const response = await fetch("http://localhost:3000/todos/"+id);
+
+      if (!response.ok) {
+        console.log("error -> ");
+        dispatch(
+          uiAction.setError({
+            isError: true,
+            error: {
+              status: 400,
+              message: "failed to load task",
+            },
+          })
+        );
+      }
+
+      const data = await response.json();
+
+      return data;
+    };
+
+    try {
+      const taskData = await fetchData();
+      dispatch(
+        todoActions.replaceSelectedTodo({
+          todo: taskData,
+        })
+      );
+    } catch (error) {
+      console.log("error => ", error);
+      dispatch(
+        uiAction.setError({
+          isError: true,
+          error: error,
+        })
+      );
+    }
+  };
+};
+
+export const deleteTask = (id) => {
+  return async (dispatch) => {
+    const fetchData = async () => {
+      const response = await fetch("http://localhost:3000/todos/"+id,{
+        method: 'DELETE'
+      });
+
+      if (!response.ok) {
+        console.log("error -> ");
+        dispatch(
+          uiAction.setError({
+            isError: true,
+            error: {
+              status: 400,
+              message: "failed to load task",
+            },
+          })
+        );
+      }
+
+      const data = await response.json();
+
+      return data;
+    };
+
+    try {
+      const taskData = await fetchData();
+    } catch (error) {
+      console.log("error => ", error);
+      dispatch(
+        uiAction.setError({
+          isError: true,
+          error: error,
+        })
+      );
+    }
+  };
+}
+
+export const searchTaskByStatus = (status) => {
+  return async (dispatch) => {
+    const fetchData = async () => {
+      const response = await fetch("http://localhost:3000/todos?task.status="+status);
+
+      if (!response.ok) {
+        console.log("error -> ");
+        dispatch(
+          uiAction.setError({
+            isError: true,
+            error: {
+              status: 400,
+              message: "failed to load task",
+            },
+          })
+        );
+      }
+
+      const data = await response.json();
+
+      return data;
+    };
+
+    try {
+      const taskData = await fetchData();
+
+      dispatch(
+        todoActions.replaceTodos({
+          todos: taskData,
+        })
+      );
+    } catch (error) {
+      dispatch(
+        uiAction.setError({
+          isError: true,
+          error: error,
+        })
+      );
+    }
+  };
+}

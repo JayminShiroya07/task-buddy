@@ -8,8 +8,7 @@ import EditTask from './components/EditTask'
 import TaskNavigation from './components/TaskNavigation'
 import AddTask from './components/AddTask'
 import store from './store/index'
-import { Provider, useSelector } from 'react-redux'
-// import {action as addTaskAction} from './components/TodoForm'
+import { Provider, useSelector } from 'react-redux' 
 import ErrorPage from './components/ErrorPage'
 
 function App() {
@@ -27,12 +26,27 @@ function App() {
           element: <Home />
         },
         {
+          path:'Tasks',
+          element: <TaskNavigation/>,
           path: 'Tasks',
           element: <TaskNavigation />,
           children: [
             {
+              index:true,
+              element: <Tasks/>,
               index: true,
               element: <Tasks />
+            },
+            {
+              path: 'AddTask',
+              element: <AddTask/>,
+              element: <AddTask />,
+            },
+            {
+              path:':taskId',
+              element:<EditTask/>,
+              path: ':taskId',
+              element: <EditTask />
             }
           ]
         },

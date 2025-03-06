@@ -3,7 +3,8 @@ import TaskList from "../Util/taskList";
 
 const initialTodoState = {
   todos: [],
-  selectedTodo: 0,
+  selectedTodo: [],
+  filteredTodo: []
 };
 
 const todoSlice = createSlice({
@@ -16,17 +17,10 @@ const todoSlice = createSlice({
     },
     replaceTodos(state, action){
       state.todos = action.payload.todos;
-      state.selectedTodo = 0;
+      state.selectedTodo = [];
     },
-    filterTodos(state, action){
-      console.log(action.payload.search)
-      if(action.payload.search === 'completed'){
-        state.todos = state.todos.filter((todo) => todo.status === true);
-        console.log(state.todos)
-      }
-      if(action.payload.search === "incomplete"){
-        state.todos =  state.todos.filter((todo) => todo.status === false);
-      }
+    replaceSelectedTodo(state,action){
+      state.selectedTodo = action.payload.todo.task;
     }
   },
 });
