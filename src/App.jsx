@@ -28,25 +28,18 @@ function App() {
         {
           path:'Tasks',
           element: <TaskNavigation/>,
-          path: 'Tasks',
-          element: <TaskNavigation />,
           children: [
             {
               index:true,
               element: <Tasks/>,
-              index: true,
-              element: <Tasks />
             },
             {
               path: 'AddTask',
-              element: <AddTask/>,
-              element: <AddTask />,
+              element: <AddTask/>
             },
             {
               path:':taskId',
               element:<EditTask/>,
-              path: ':taskId',
-              element: <EditTask />
             }
           ]
         },
