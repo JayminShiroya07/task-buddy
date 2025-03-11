@@ -1,8 +1,6 @@
 import { useDispatch, useSelector } from "react-redux";
 import TaskItems from "./TaskItems";
-import { useEffect, useState } from "react";
-import { replace } from "react-router-dom";
-import todoSlice, { todoActions } from "../store/todoSlice";
+import { useEffect } from "react";
 import { uiAction } from "../store/uiSlice";
 import { fetchTaskData } from "../store/todo-action";
 import ErrorPage from "./ErrorPage";

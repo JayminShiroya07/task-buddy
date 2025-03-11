@@ -1,7 +1,6 @@
 import { NavLink } from "react-router-dom";
 import { useRef } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { todoActions } from "../store/todoSlice";
 import { fetchTaskData, searchTaskByStatus } from "../store/todo-action";
 
 export default function TaskHeader({toogle}) {

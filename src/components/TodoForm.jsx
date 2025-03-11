@@ -1,6 +1,5 @@
 import { useActionState, useRef } from "react";
 import { useDispatch } from "react-redux";
-import { todoActions } from "../store/todoSlice";
 import { sendTaskData } from "../store/todo-action";
 import { useNavigate, useParams } from "react-router-dom";
 
@@ -106,9 +105,9 @@ export default function TodoForm({ method, todo }) {
                                         id="status"
                                         name="status"
                                         className={inputCss}
-                                        defaultValue={todo.status ? "Complete" : "Incomplete"}
+                                        defaultValue={todo ? todo.status === "Complete" ? "Complete" : "Incomplete" : '-'}
                                     >
-                                        <option value="-">---select status ---</option>
+                                        <option  value="-">---select status ---</option>
                                         <option value="Complete">Complete</option>
                                         <option value="Incomplete">Incomplete</option>
                                     </select>
